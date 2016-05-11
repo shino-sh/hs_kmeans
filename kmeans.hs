@@ -40,7 +40,7 @@ clustering vectors old_center_vectors old_label_vectors count
 main :: IO ()
 main = do
     let datasize = 100
-    let label_count = 3
+    let label_count = 4
 
     x <- replicateM datasize $ (getStdRandom $ randomR (0, 10) :: IO Float)
     y <- replicateM datasize $ (getStdRandom $ randomR (0, 10) :: IO Float)
@@ -51,5 +51,5 @@ main = do
 
     let centers = clustering vectors init_center_vectors init_label_vectors 100
     let labels = map (\v -> near v centers) vectors
-    print $ zip vectors labels
+    foldr1 (>>) $ map putStrLn $ zipWith (\v l -> (show $ v !! 0) ++ " " ++ (show $ v !! 1) ++ " " ++ (show l)) vectors labels
 
